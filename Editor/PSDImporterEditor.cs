@@ -79,6 +79,7 @@ namespace UnityEditor.U2D.PSD
         SerializedProperty m_DocumentAlignment;
         SerializedProperty m_GenerateGOHierarchy;
         SerializedProperty m_KeepDupilcateSpriteName;
+        SerializedProperty m_AdaptiveSpritePivot;
         SerializedProperty m_GeneratePhysicsShape;
         SerializedProperty m_LayerMappingOption;
         SerializedProperty m_Padding;
@@ -149,6 +150,7 @@ namespace UnityEditor.U2D.PSD
             m_DocumentAlignment = serializedObject.FindProperty("m_DocumentAlignment");
             m_GenerateGOHierarchy = serializedObject.FindProperty("m_GenerateGOHierarchy");
             m_KeepDupilcateSpriteName = serializedObject.FindProperty("m_KeepDupilcateSpriteName");
+            m_AdaptiveSpritePivot = serializedObject.FindProperty("m_AdaptiveSpritePivot");
             m_GeneratePhysicsShape = serializedObject.FindProperty("m_GeneratePhysicsShape");
             m_LayerMappingOption = serializedObject.FindProperty("m_LayerMappingOption");
             m_Padding = serializedObject.FindProperty("m_Padding");
@@ -1016,6 +1018,7 @@ namespace UnityEditor.U2D.PSD
                             EditorGUILayout.PropertyField(m_DocumentPivot, new GUIContent());
                             GUILayout.EndHorizontal();
                         }
+                        EditorGUILayout.PropertyField(m_AdaptiveSpritePivot, styles.AdaptiveSpritePivotLabel);
                     }
                 }
                 GUILayout.Space(5);
@@ -1736,6 +1739,7 @@ namespace UnityEditor.U2D.PSD
             public readonly GUIContent spriteMeshType = new GUIContent("Mesh Type", "Type of sprite mesh to generate.");
             public readonly GUIContent spriteAlignment = new GUIContent("Pivot", "Sprite pivot point in its local space. May be used for syncing animation frames of different sizes.");
             public readonly GUIContent characterAlignment = new GUIContent("Pivot", "Character pivot point in its local space using normalized value i.e. 0 - 1");
+            public readonly GUIContent AdaptiveSpritePivotLabel = EditorGUIUtility.TrTextContent("Use Sprite Pivot", "Apply pivot changes to sprites instead of GameObjects.");
 
             public readonly GUIContent[] spriteAlignmentOptions =
             {

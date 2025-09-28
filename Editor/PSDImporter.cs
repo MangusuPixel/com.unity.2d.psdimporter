@@ -159,6 +159,9 @@ namespace UnityEditor.U2D.PSD
         [SerializeField]
         bool m_KeepDupilcateSpriteName = true;
 
+        [SerializeField]
+        bool m_AdaptiveSpritePivot = false;
+
 #if ENABLE_2D_TILEMAP_EDITOR
         [SerializeField]
         bool m_GenerateTileAssets = false;
@@ -759,8 +762,6 @@ namespace UnityEditor.U2D.PSD
                         {
                             spriteSheet = new SpriteMetaData();
                             spriteSheet.border = Vector4.zero;
-                            spriteSheet.alignment = (SpriteAlignment)m_TextureImporterSettings.spriteAlignment;
-                            spriteSheet.pivot = m_TextureImporterSettings.spritePivot;
                             spriteSheet.rect = new Rect(spriteData[i].x, spriteData[i].y, spriteData[i].width, spriteData[i].height);
                             spriteSheet.spriteID = psdLayer.spriteID;
                         }
@@ -779,6 +780,18 @@ namespace UnityEditor.U2D.PSD
                             spriteSheet.rect = new Rect(spriteData[i].x, spriteData[i].y, spriteData[i].width, spriteData[i].height);
 
                         spriteSheet.uvTransform = uvTransform[i];
+
+                        if (m_AdaptiveSpritePivot)
+                        {
+                            Vector2 spritePosition = canvasSize * SpriteMetaData.GetPivotValue(m_DocumentAlignment, m_DocumentPivot) - spriteSheet.spritePosition;
+                            spriteSheet.alignment = SpriteAlignment.Custom;
+                            spriteSheet.pivot = new Vector2(spritePosition.x / spriteSheet.rect.width, spritePosition.y / spriteSheet.rect.height);
+                        }
+                        else
+                        {
+                            spriteSheet.alignment = (SpriteAlignment)m_TextureImporterSettings.spriteAlignment;
+                            spriteSheet.pivot = m_TextureImporterSettings.spritePivot;
+                        }
 
                         psdLayer.spriteID = spriteSheet.spriteID;
                         psdLayer.mosaicPosition = spriteData[i].position;
