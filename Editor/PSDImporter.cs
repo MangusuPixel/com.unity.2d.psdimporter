@@ -781,7 +781,7 @@ namespace UnityEditor.U2D.PSD
 
                         spriteSheet.uvTransform = uvTransform[i];
 
-                        if (m_AdaptiveSpritePivot)
+                        if (m_AdaptiveSpritePivot && spriteSheet.rect.width > 0 && spriteSheet.rect.height > 0)
                         {
                             Vector2 spritePosition = canvasSize * SpriteMetaData.GetPivotValue(m_DocumentAlignment, m_DocumentPivot) - spriteSheet.spritePosition;
                             spriteSheet.alignment = SpriteAlignment.Custom;
